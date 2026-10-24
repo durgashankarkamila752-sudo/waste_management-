@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07140f">
+<title>ECO REVOLUTION | Smart Waste Management</title>
+
+<style>
+:root {
+  --bg:#07140f; --panel:#0e2119; --panel2:#132b20;
+  --text:#effff4; --muted:#b3c9bb; --green:#63ff9b;
+  --border:rgba(99,255,155,.22);
+}
+body.light {
+  --bg:#f2fff6; --panel:#fff; --panel2:#e5f9ec;
+  --text:#102c1d; --muted:#456654; --green:#087b3c;
+  --border:rgba(8,123,60,.22);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:radial-gradient(ellipse at top,rgba(34,201,104,.14),transparent 55%),var(--bg);
+  color:var(--text); font-family:system-ui,Arial,sans-serif;
+  line-height:1.6; transition:.3s;
+}
+button { font:inherit; cursor:pointer; }
+.site-header {
+  position:sticky; top:0; z-index:10;
+  background:var(--bg); border-bottom:1px solid var(--border);
+}
+.nav-wrap {
+  max-width:1100px; margin:auto; padding:14px 20px;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:12px; flex-wrap:wrap;
+}
+.brand { font-weight:900; letter-spacing:1.5px; }
+.green { color:var(--green); }
+.nav-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.nav-tab,.theme-btn,.small-btn,.secondary-btn {
+  background:var(--panel); color:var(--text);
+  border:1px solid var(--border); border-radius:12px;
+  padding:10px 14px; transition:.2s;
+}
+.nav-tab[aria-selected="true"] {
+  background:var(--green); color:#062012;
+}
+button:hover { border-color:var(--green); transform:translateY(-2px); }
+main { max-width:1100px; margin:auto; padding:0 20px 50px; }
+.hero {
+  min-height:440px; display:grid; place-items:center;
+  text-align:center; position:relative; padding:60px 0;
+}
+.orb {
+  position:absolute; z-index:-1; width:240px; height:240px;
+  border:1px solid var(--border); border-radius:50%;
+  box-shadow:0 0 65px rgba(34,201,104,.15);
+  animation:orbit 18s linear infinite;
+}
+h1 {
+  font-size:clamp(2.5rem,8vw,5.5rem); line-height:1.1;
+  margin:22px 0; font-weight:950;
+  animation:glow 3s ease-in-out infinite alternate;
+}
+.slogan { color:var(--muted); font-size:clamp(1rem,3vw,1.4rem); }
+.hero-copy { max-width:650px; margin:20px auto; color:var(--muted); }
+.eyebrow {
+  color:var(--green); border:1px solid var(--border);
+  border-radius:30px; padding:8px 14px; background:var(--panel);
+}
+.primary-btn {
+  background:var(--green); color:#062012; border:0;
+  border-radius:12px; padding:13px 18px; font-weight:800;
+  margin:5px;
+}
+.secondary-btn { margin:5px; font-weight:750; }
+.section-nav {
+  display:flex; justify-content:center; gap:10px;
+  flex-wrap:wrap; margin:10px 0 22px;
+}
+.content-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:22px; padding:clamp(20px,4vw,35px);
+  animation:reveal .35s ease;
+}
+.section-heading { display:flex; gap:14px; align-items:center; margin-bottom:18px; }
+.section-icon {
+  width:52px; height:52px; display:grid; place-items:center;
+  background:var(--panel2); border:1px solid var(--border);
+  border-radius:15px; font-size:1.7rem;
+}
+h2 { margin:0; font-size:clamp(1.6rem,4vw,2.3rem); line-height:1.2; }
+h3 { margin:0 0 8px; }
+.subheading,.muted { color:var(--muted); }
+.grid {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px; margin:22px 0;
+}
+.card {
+  background:var(--panel2); border:1px solid var(--border);
+  border-radius:16px; padding:19px; transition:.2s;
+}
+.card:hover { transform:translateY(-4px); border-color:var(--green); }
+.card-icon { font-size:1.8rem; margin-bottom:8px; }
+.card p { color:var(--muted); margin:0; }
+.check-list {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px; padding:0; list-style:none;
+}
+.check-list li { color:var(--muted); padding-left:25px; position:relative; }
+.check-list li:before { content:"✓"; color:var(--green); position:absolute; left:0; }
+.workflow {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px; margin:22px 0;
+}
+.step {
+  padding:17px 10px; text-align:center; border-radius:15px;
+  border:1px solid var(--border); background:var(--panel2);
+  color:var(--text);
+}
+.step.active { border-color:var(--green); box-shadow:0 0 20px rgba(99,255,155,.15); }
+.step span { display:block; }
+.step .num { color:var(--green); font-size:.8rem; font-weight:900; }
+.step .emoji { font-size:1.8rem; }
+.step-detail {
+  background:var(--panel2); border:1px dashed var(--border);
+  border-radius:13px; padding:16px; color:var(--muted);
+}
+.step-detail strong { color:var(--green); }
+.facts-impact {
+  display:grid; grid-template-columns:1.2fr 1fr;
+  gap:16px; margin-top:24px;
+}
+.fact-card,.impact-card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:18px; padding:22px;
+}
+.fact-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.fact-number { font-size:2rem; color:var(--green); font-weight:900; }
+.impact-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:15px; }
+.impact-stat { background:var(--panel2); border-radius:12px; padding:14px; }
+.impact-stat strong { display:block; color:var(--green); font-size:1.6rem; }
+.impact-stat span,.demo-note { color:var(--muted); font-size:.82rem; }
+.action-box {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:18px; margin-top:24px; padding:24px;
+  background:var(--panel2); border:1px solid var(--border); border-radius:18px;
+}
+.tips-list { color:var(--muted); padding-left:22px; }
+.tips-list li { margin:8px 0; }
+.hidden { display:none !important; }
+.floating {
+  position:fixed; z-index:-1; pointer-events:none; color:var(--green);
+  opacity:.2; animation:drift 12s ease-in-out infinite;
+}
+.f1 { top:22%; left:3%; } .f2 { top:60%; right:4%; }
+footer { text-align:center; color:var(--muted); padding:25px; border-top:1px solid var(--border); }
+footer strong { color:var(--green); letter-spacing:1px; }
+@keyframes glow {
+  from { text-shadow:0 0 10px rgba(99,255,155,.15); }
+  to { text-shadow:0 0 30px rgba(99,255,155,.5); }
+}
+@keyframes orbit { to { transform:rotate(360deg); } }
+@keyframes reveal {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes drift {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-22px); }
+}
+@media(max-width:760px) {
+  .nav-wrap { align-items:flex-start; flex-direction:column; }
+  .nav-actions { width:100%; }
+  .nav-tab { flex:1; padding:9px 8px; }
+  .grid,.facts-impact { grid-template-columns:1fr; }
+  .check-list { grid-template-columns:1fr; }
+  .workflow { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .action-box { flex-direction:column; align-items:flex-start; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="floating f1" aria-hidden="true">✳ ♻</div>
+<div class="floating f2" aria-hidden="true">✦ 🌱</div>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <div class="brand">♻ ECO <span class="green">REVOLUTION</span></div>
+    <div class="nav-actions" aria-label="Website controls">
+      <button class="nav-tab" role="tab" aria-selected="true" data-section="about">About</button>
+      <button class="nav-tab" role="tab" aria-selected="false" data-section="idea">Our Idea</button>
+      <button class="nav-tab" role="tab" aria-selected="false" data-section="benefits">Benefits</button>
+      <button class="theme-btn" id="theme-toggle" type="button">☀️ Theme</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="orb" aria-hidden="true"></div>
+    <div>
+      <span class="eyebrow">🌱 A smarter way to a cleaner planet</span>
+      <h1 id="hero-title" tabindex="0">ECO <span class="green">REVOLUTION</span></h1>
+      <p class="slogan" id="slogan" aria-live="polite">“Don't Waste Waste — Turn Trash into Treasure!”</p>
+      <p class="hero-copy">Rethink waste. Recover resources. Restore our future. Discover how simple habits and smart technology can help create cleaner communities.</p>
+      <button class="primary-btn" id="explore-btn">Explore the Project ↓</button>
+      <button class="secondary-btn" id="slogan-btn">✨ Change Slogan</button>
+    </div>
+  </section>
+
+  <div class="section-nav" role="tablist" aria-label="Project sections">
+    <button class="nav-tab" role="tab" aria-selected="true" data-section="about">🌍 About</button>
+    <button class="nav-tab" role="tab" aria-selected="false" data-section="idea">💡 Our Idea</button>
+    <button class="nav-tab" role="tab" aria-selected="false" data-section="benefits">🌿 Benefits</button>
+  </div>
+
+  <div class="content-panel" id="main-content" role="tabpanel" tabindex="0" aria-live="polite">
+
+    <!-- ABOUT SECTION -->
+    <section data-panel="about">
+      <div class="section-heading">
+        <div class="section-icon">🌍</div>
+        <div><h2>About the Project</h2><p class="subheading">Small changes. Big environmental impact.</p></div>
+      </div>
+      <p class="muted">Waste management is the responsible collection, sorting, treatment, recycling, and safe disposal of waste. Plastic packaging, food scraps, paper, and electronic waste can harm land, water, wildlife, and human health when handled incorrectly.</p>
+      <p class="muted">ECO REVOLUTION promotes a circular approach: separate waste at its source, recover useful materials, compost suitable organic waste, and use smart tools to make collection more efficient. Our goal is to treat waste as a resource instead of simply throwing it away.</p>
+      <div class="grid">
+        <article class="card"><div class="card-icon">🗑️</div><h3>The Challenge</h3><p>Mixed waste is harder to recycle and can contaminate reusable materials.</p></article>
+        <article class="card"><div class="card-icon">♻️</div><h3>Our Mission</h3><p>Encourage segregation, recycling, composting, and responsible disposal.</p></article>
+        <article class="card"><div class="card-icon">🌱</div><h3>Our Goal</h3><p>Support cleaner neighbourhoods and environmentally responsible habits.</p></article>
+      </div>
+      <h3>Project Objectives</h3>
+      <ul class="check-list">
+        <li>Make waste segregation easy to understand.</li>
+        <li>Reduce avoidable waste sent to landfills.</li>
+        <li>Recover reusable and recyclable materials.</li>
+        <li>Explain how sensors can improve bin collection.</li>
+        <li>Raise awareness about responsible consumption.</li>
+        <li>Protect soil, water, wildlife, and public spaces.</li>
+      </ul>
+    </section>
+
+    <!-- OUR IDEA SECTION -->
+    <section data-panel="idea" class="hidden">
+      <div class="section-heading">
+        <div class="section-icon">💡</div>
+        <div><h2>Our Smart Idea</h2><p class="subheading">From waste collection to useful resources.</p></div>
+      </div>
+      <p class="muted">Our concept combines correct sorting, composting, recycling, and smart-bin monitoring. Organic waste can be composted; clean paper, plastic, glass, and metal can go to appropriate recycling streams. A sensor-enabled bin could alert a collection team when it is nearly full.</p>
+      <div class="grid">
+        <article class="card"><div class="card-icon">🍃</div><h3>Organic Waste</h3><p>Separate suitable food and garden scraps and compost them safely.</p></article>
+        <article class="card"><div class="card-icon">🧴</div><h3>Recyclables</h3><p>Keep paper, metal, glass, and accepted plastics sorted according to local rules.</p></article>
+        <article class="card"><div class="card-icon">📡</div><h3>Smart Dustbins</h3><p>A distance sensor and microcontroller can estimate bin fill level.</p></article>
+      </div>
+
+      <h3>How It Works — Tap Each Step</h3>
+      <div class="workflow">
+        <button class="step active" data-step="0" aria-pressed="true"><span class="num">STEP 01</span><span class="emoji">🚮</span><strong>Collection</strong></button>
+        <button class="step" data-step="1" aria-pressed="false"><span class="num">STEP 02</span><span class="emoji">🧺</span><strong>Segregation</strong></button>
+        <button class="step" data-step="2" aria-pressed="false"><span class="num">STEP 03</span><span class="emoji">♻️</span><strong>Processing</strong></button>
+        <button class="step" data-step="3" aria-pressed="false"><span class="num">STEP 04</span><span class="emoji">🌿</span><strong>New Resources</strong></button>
+      </div>
+      <div class="step-detail" id="step-detail" aria-live="polite"><strong>Collection:</strong> Waste is placed in designated bins. A smart sensor can indicate when a bin needs emptying.</div>
+
+      <h3 style="margin-top:28px">Innovation &amp; Future Scope</h3>
+      <ul class="check-list">
+        <li>Fill-level sensors can help plan collection routes.</li>
+        <li>Colour-coded bins can make sorting clearer.</li>
+        <li>A dashboard could show bin status.</li>
+        <li>QR codes could share sorting guidance.</li>
+        <li>Future versions could track verified recycling data.</li>
+        <li>Community drives can encourage participation.</li>
+      </ul>
+      <p class="muted">Prototype note: sensors and dashboards are proposed features. They require suitable hardware, testing, and installation before real-world use.</p>
+    </section>
+
+    <!-- BENEFITS SECTION -->
+    <section data-panel="benefits" class="hidden">
+      <div class="section-heading">
+        <div class="section-icon">🌿</div>
+        <div><h2>Benefits &amp; Impact</h2><p class="subheading">Better waste habits create a better future.</p></div>
+      </div>
+      <p class="muted">A well-planned waste system can reduce litter and pollution, recover materials, and make communities cleaner. Results depend on local recycling facilities, correct sorting, public participation, and safe waste handling.</p>
+      <div class="grid">
+        <article class="card"><div class="card-icon">🌊</div><h3>Less Pollution</h3><p>Responsible collection helps keep litter out of streets, rivers, and habitats.</p></article>
+        <article class="card"><div class="card-icon">🫧</div><h3>Cleaner Communities</h3><p>Well-managed waste helps reduce overflowing bins, odours, and pests.</p></article>
+        <article class="card"><div class="card-icon">🔄</div><h3>Resource Recovery</h3><p>Recycling can return suitable materials to production.</p></article>
+        <article class="card"><div class="card-icon">🌾</div><h3>Useful Compost</h3><p>Properly managed organic waste can become compost for soil.</p></article>
+        <article class="card"><div class="card-icon">🏞️</div><h3>Less Landfill Waste</h3><p>Reuse, composting, and recycling can divert suitable materials from landfills.</p></article>
+        <article class="card"><div class="card-icon">🤝</div><h3>Community Action</h3><p>Clear guidance helps households and schools take part in cleaner practices.</p></article>
+      </div>
+      <div class="action-box">
+        <div><h3>Be part of the solution</h3><p class="muted">Carry a reusable bottle, sort waste, or repair and reuse an item.</p></div>
+        <button class="primary-btn" id="benefit-action">Take Action 🌱</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- FACTS AND DEMO COUNTERS -->
+  <section class="facts-impact">
+    <article class="fact-card">
+      <div class="fact-top"><h2 style="font-size:1.35rem">💭 Did You Know?</h2><button class="small-btn" id="fact-next">Another fact ↻</button></div>
+      <div class="fact-number" id="fact-symbol">♻</div>
+      <p id="fact-text" class="muted">Keeping recyclable materials clean and separated helps reduce contamination.</p>
+    </article>
+    <article class="impact-card">
+      <h2 style="font-size:1.35rem">📊 Recycling Impact</h2>
+      <p class="muted">Illustrative demo values — not measured project results.</p>
+      <div class="impact-grid">
+        <div class="impact-stat"><strong id="items-count">128</strong><span>Items sorted (demo)</span></div>
+        <div class="impact-stat"><strong id="reuse-count">64</strong><span>Items reused (demo)</span></div>
+      </div>
+      <button class="secondary-btn" style="margin-top:14px;width:100%" id="demo-add">＋ Add demo sorting activity</button>
+      <p class="demo-note">Sample numbers only. This does not detect or record real waste.</p>
+    </article>
+  </section>
+
+  <!-- TAKE ACTION SECTION -->
+  <section class="action-box" id="take-action">
+    <div>
+      <h2 style="font-size:1.5rem">Take Action Today</h2>
+      <p class="muted">Simple choices add up when we make them every day.</p>
+      <ul class="tips-list hidden" id="tips-list">
+        <li>Carry a reusable bag and water bottle.</li>
+        <li>Separate organic waste from dry recyclables as local rules advise.</li>
+        <li>Compost suitable food and garden scraps safely.</li>
+        <li>Repair, donate, or reuse items before throwing them away.</li>
+        <li>Take batteries and e-waste to an authorised collection point.</li>
+      </ul>
+    </div>
+    <button class="primary-btn" id="tips-toggle" aria-expanded="false">Show My Action Plan +</button>
+  </section>
+</main>
+
+<footer><strong>ECO REVOLUTION</strong><br>Designed for a Greener Tomorrow 🌍<br><small>Reduce • Reuse • Recycle • Restore</small></footer>
+
+<script>
+// Show only the section that the visitor selects.
+const tabs = [...document.querySelectorAll('[data-section]')];
+const panels = [...document.querySelectorAll('[data-panel]')];
+
+function showSection(name) {
+  panels.forEach(panel => panel.classList.toggle('hidden', panel.dataset.panel !== name));
+  tabs.forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.section === name)));
+  const panel = document.querySelector(`[data-panel="${name}"]`);
+  if (panel) {
+    panel.animate(
+      [{opacity:0.4,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],
+      {duration:280}
+    );
+  }
+}
+tabs.forEach(tab => tab.addEventListener('click', () => showSection(tab.dataset.section)));
+
+// Interactive environmental slogans.
+const slogans = [
+  "“Don't Waste Waste — Turn Trash into Treasure!”",
+  "“Reduce, Reuse, Recycle — Repeat!”",
+  "“A Cleaner Earth Starts with Us.”",
+  "“Smart Waste, Smart Future.”",
+  "“Be the Solution, Not the Pollution.”"
+];
+let sloganIndex = 0;
+
+function changeSlogan() {
+  sloganIndex = (sloganIndex + 1) % slogans.length;
+  document.getElementById('slogan').textContent = slogans[sloganIndex];
+}
+document.getElementById('hero-title').addEventListener('click', changeSlogan);
+document.getElementById('hero-title').addEventListener('keydown', event => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    changeSlogan();
+  }
+});
+document.getElementById('slogan-btn').addEventListener('click', changeSlogan);
+
+// Explore button.
+document.getElementById('explore-btn').addEventListener('click', () => {
+  showSection('about');
+  document.getElementById('main-content').scrollIntoView({behavior:'smooth'});
+});
+
+// Dark/light theme switch.
+document.getElementById('theme-toggle').addEventListener('click', event => {
+  const light = document.body.classList.toggle('light');
+  event.currentTarget.textContent = light ? '🌙 Theme' : '☀️ Theme';
+  document.querySelector('meta[name="theme-color"]').content = light ? '#f2fff6' : '#07140f';
+});
+
+// Interactive workflow steps.
+const stepInfo = [
+  ['Collection','Waste is placed in designated bins. A smart sensor can indicate when a bin needs emptying.'],
+  ['Segregation','Separate organic waste, recyclables, and special waste. Follow local collection instructions.'],
+  ['Processing','Suitable organic material can be composted; accepted recyclables go to appropriate recycling facilities.'],
+  ['New Resources','Compost can improve soil, while recovered materials may be used to manufacture new products.']
+];
+
+document.querySelectorAll('[data-step]').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('[data-step]').forEach(step => {
+      const active = step === button;
+      step.classList.toggle('active', active);
+      step.setAttribute('aria-pressed', String(active));
+    });
+    const [title, description] = stepInfo[Number(button.dataset.step)];
+    const detail = document.getElementById('step-detail');
+    detail.replaceChildren();
+    const strong = document.createElement('strong');
+    strong.textContent = title + ': ';
+    detail.append(strong, document.createTextNode(description));
+  });
+});
+
+// Environmental facts.
+const facts = [
+  ['♻','Keeping recyclable materials clean and separated helps reduce contamination.'],
+  ['🍌','Suitable fruit and vegetable scraps can often be composted.'],
+  ['🔋','Batteries and electronic waste should go to authorised collection points.'],
+  ['🛍️','Reusing what you already own can prevent waste before it starts.'],
+  ['🧴','Check local recycling rules: not every type of plastic is accepted everywhere.']
+];
+let factIndex = 0;
+
+document.getElementById('fact-next').addEventListener('click', () => {
+  factIndex = (factIndex + 1) % facts.length;
+  document.getElementById('fact-symbol').textContent = facts[factIndex][0];
+  document.getElementById('fact-text').textContent = facts[factIndex][1];
+});
+
+// Demo-only counters.
+let sorted = 128;
+let reused = 64;
+
+document.getElementById('demo-add').addEventListener('click', () => {
+  sorted++;
+  document.getElementById('items-count').textContent = sorted;
+  if (sorted % 2 === 0) reused++;
+  document.getElementById('reuse-count').textContent = reused;
+});
+
+// Reveal the practical action plan.
+const tips = document.getElementById('tips-list');
+const tipsButton = document.getElementById('tips-toggle');
+
+function revealTips() {
+  tips.classList.remove('hidden');
+  tipsButton.textContent = 'Hide My Action Plan −';
+  tipsButton.setAttribute('aria-expanded','true');
+  document.getElementById('take-action').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+tipsButton.addEventListener('click', () => {
+  const opening = tips.classList.contains('hidden');
+  tips.classList.toggle('hidden', !opening);
+  tipsButton.textContent = opening ? 'Hide My Action Plan −' : 'Show My Action Plan +';
+  tipsButton.setAttribute('aria-expanded',String(opening));
+});
+
+document.getElementById('benefit-action').addEventListener('click', revealTips);
+</script>
+</body>
+</html>
